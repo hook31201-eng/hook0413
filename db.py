@@ -9,7 +9,7 @@ PASSWORD = os.getenv("DB_PASSWORD", "Nutc@2026")
 
 def _conn_str() -> str:
     return (
-        f"DRIVER={{ODBC Driver 17 for SQL Server}};"
+        f"DRIVER={{ODBC Driver 18 for SQL Server}};"
         f"SERVER={SERVER};"
         f"DATABASE={DATABASE};"
         f"UID={USERNAME};"
