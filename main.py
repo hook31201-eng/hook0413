@@ -39,13 +39,14 @@ async def index(request: Request):
 
 @app.post("/query")
 async def query(question: str = Form(...)):
-    schema_context = _state.get("schema", "")
-    sql = nl_to_sql(question, schema_context)
-
-    if sql.upper().startswith("ERROR:"):
-        return JSONResponse({"error": sql, "sql": "", "columns": [], "rows": []})
-
+    sql = ""
     try:
+        schema_context = _state.get("schema", "")
+        sql = nl_to_sql(question, schema_context)
+
+        if sql.upper().startswith("ERROR:"):
+            return JSONResponse({"error": sql, "sql": "", "columns": [], "rows": []})
+
         columns, rows = execute_query(sql)
         return JSONResponse({"error": None, "sql": sql, "columns": columns, "rows": rows})
     except Exception as e:
